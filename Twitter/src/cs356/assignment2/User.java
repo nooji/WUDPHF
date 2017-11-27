@@ -1,8 +1,10 @@
 package cs356.assignment2;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public interface User {
+	
 	public void addFollows(User u);
 
 	public void addFollowed(User u);
@@ -22,4 +24,8 @@ public interface User {
 	public String getId();
 
 	public String toString();
+	
+	public Timestamp getCreationTime();
+	
+
 }

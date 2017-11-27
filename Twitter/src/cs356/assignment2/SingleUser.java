@@ -2,6 +2,8 @@ package cs356.assignment2;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Timestamp;
+
 
 public class SingleUser implements User {
 	private static int userCounter = 0;
@@ -11,10 +13,14 @@ public class SingleUser implements User {
 	// list of users who follows this.user
 	private List<User> followers;
 	private List<String> newsFeed;
+	private long timeStamp;
+	private long updateTime;
 
 	private ProfileViewPanel userPanel;
 
 	public SingleUser(String id) {
+		timeStamp = System.currentTimeMillis();
+		updateTime = System.currentTimeMillis();
 		this.id = id;
 		follows = new ArrayList<User>();
 		followers = new ArrayList<User>();
@@ -31,6 +37,7 @@ public class SingleUser implements User {
 	 **************************************************************/
 	public void addToNewsFeed(String message) {
 		this.newsFeed.add(message);
+		updateTime = System.currentTimeMillis();
 	}
 
 	/**************************************************************
@@ -98,6 +105,21 @@ public class SingleUser implements User {
 	 *************************************************************/
 	public void setUserPanel(ProfileViewPanel userPanel) {
 		this.userPanel = userPanel;
+	}
+
+	@Override
+	public Timestamp getCreationTime() {
+		// TODO Auto-generated method stub
+		return new Timestamp(timeStamp);
+	}
+
+	
+	public Timestamp getUpdatedTime() {
+		return new Timestamp(updateTime);
+	}
+
+	public long getUpdatedTimeLong() {
+		return updateTime;
 	}
 
 }

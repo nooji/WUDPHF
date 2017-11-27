@@ -27,6 +27,11 @@ public class ProfileViewPanel implements Observable, Observer {
 	private JLabel messageLabel;
 	private JLabel newsFeedLabel;
 	private JLabel followingLabel;
+	private JLabel creationLabel;
+	private JLabel creationTime;
+	private JLabel lastUpdate;
+	private JLabel updateTime;
+	
 
 	private static List<User> users = new ArrayList<User>();
 
@@ -85,6 +90,25 @@ public class ProfileViewPanel implements Observable, Observer {
 		messageLabel.setForeground(Color.GREEN);
 		messageLabel.setBounds(10, 399, 330, 14);
 		frame.getContentPane().add(messageLabel);
+		
+		creationLabel = new JLabel("Creation Time: ");
+		creationLabel.setBounds(10, 430, 160, 13);
+		frame.getContentPane().add(creationLabel);
+		
+		lastUpdate = new JLabel("Last Updated: ");
+		lastUpdate.setBounds(10, 450, 160, 13);
+		frame.getContentPane().add(lastUpdate);
+		
+		creationTime = new JLabel(thisUser.getCreationTime().toString());
+		creationTime.setForeground(Color.GREEN);
+		creationTime.setBounds(120, 430, 160, 13);
+		frame.getContentPane().add(creationTime);
+		
+		updateTime = new JLabel(((SingleUser) thisUser).getUpdatedTime().toString());
+		updateTime.setForeground(Color.GREEN);
+		updateTime.setBounds(120, 450, 160, 13);
+		frame.getContentPane().add(updateTime);
+		
 
 		// set text
 		userID = new JTextField();
@@ -119,7 +143,6 @@ public class ProfileViewPanel implements Observable, Observer {
 		followButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				addFollower();
-
 			}
 
 		});
@@ -179,6 +202,7 @@ public class ProfileViewPanel implements Observable, Observer {
 		// update panel with current user
 		update(thisUser);
 		updateTextUser();
+		updateTime();
 	}
 
 	/***************************************************
@@ -241,6 +265,7 @@ public class ProfileViewPanel implements Observable, Observer {
 			userID.setText("");
 
 			updateTextUser();
+			updateTime();
 		}
 	}
 
@@ -258,6 +283,7 @@ public class ProfileViewPanel implements Observable, Observer {
 			update(thisUser);
 			wudphfMessages.setText("");
 			updateFollower(tweet);
+			updateTime();
 		}
 		++messageCounter;
 		for (int i = 0; i < positiveWords.length; ++i) {
@@ -266,7 +292,10 @@ public class ProfileViewPanel implements Observable, Observer {
 			}
 		}
 	}
-
+	//update times include when new post is made 
+	public void updateTime(){
+		updateTime.setText(((SingleUser) thisUser).getUpdatedTime().toString());
+	}
 	/***************************************************
 	 * Name : updateTextUser() Parameters : none Precondition : user created +
 	 * panel init Postcondition : update following list Return : void
@@ -278,6 +307,7 @@ public class ProfileViewPanel implements Observable, Observer {
 			followingUsers += following.get(i) + "\n";
 		}
 		followingText.setText(followingUsers);
+		updateTime();
 	}
 
 	/***************************************************
@@ -313,6 +343,7 @@ public class ProfileViewPanel implements Observable, Observer {
 			message += newsFeed.get(i) + "\n";
 			newsFeedText.setText(message);
 		}
+		updateTime();
 	}
 
 	/***************************************************

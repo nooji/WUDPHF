@@ -1,18 +1,21 @@
 package cs356.assignment2;
 
 import java.util.ArrayList;
+import java.sql.Timestamp;
 
 public class UserGroup implements User {
 	private String id = "";
 	private ArrayList<User> usersInGroup;
 	private ArrayList<User> groupsInGroup;
 	private static int groupCounter = 0;
+	private long timeStamp;
 
 	/*******************************************************************************
 	 * Name : UserGroup() Parameters : String Preconditions : none
 	 * Postconditions : constructor Return : none
 	 ******************************************************************************/
 	public UserGroup(String id) {
+		timeStamp = System.currentTimeMillis();
 		this.id = id;
 		usersInGroup = new ArrayList<User>();
 		groupsInGroup = new ArrayList<User>();
@@ -105,4 +108,13 @@ public class UserGroup implements User {
 		// TODO Auto-generated method stub
 
 	}
+
+	@Override
+	public Timestamp getCreationTime() {
+		// TODO Auto-generated method stub
+		return new Timestamp(timeStamp);
+	}
+
+	
+
 }
